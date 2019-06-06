@@ -4,7 +4,8 @@
 # desc: simple demonstration of a client application that uses RFCOMM sockets
 #       intended for use with rfcomm-server
 #
-# Modified for use and added keylogger
+# Modified for use and added keylogger to send keypresses to BLE device
+# by Jared Peter-Contesse jpeterco@calpoly.edu
 
 # Bluetooth Serial Libraries
 from bluetooth import *
