@@ -18,20 +18,35 @@ import win32console
 import win32gui
 import pythoncom, pyHook
 
+def restart_line():
+    sys.stdout.write('\r')
+    sys.stdout.flush()
+
 def OnKeyboardEvent(event):
     keypress = event.KeyID
-    print(keypress)
+    
     if keypress == 38: #UP
+        restart_line()
+        print("UP    ", end='', flush=True)
         sock.send(bytes([1]))
     elif keypress == 40: #DOWN
+        restart_line()
+        print("DOWN  ", end='', flush=True)
         sock.send(bytes([2]))
     elif keypress == 39: #RIGHT
+        restart_line()
+        print("RIGHT ", end='', flush=True)
         sock.send(bytes([3]))
     elif keypress == 37: #LEFT
+        restart_line()
+        print("LEFT  ", end='', flush=True)
         sock.send(bytes([4]))
     elif keypress == 32: #SPACE
+        restart_line()
+        print("STOP  ", end='', flush=True)
         sock.send(bytes([5]))
     elif keypress == 81: #Quit
+        sock.close()
         exit()
     return True
 
@@ -65,13 +80,15 @@ port = first_match["port"]
 name = first_match["name"]
 host = first_match["host"]
 
-print("connecting to \"%s\" on %s" % (name, host))
+print("connecting to \"%s\" on %s" % (port, host))
 
 # Create the client socket
 sock=BluetoothSocket( RFCOMM )
 sock.connect((host, port))
 
-print("connected")
+print("Connected")
+print("Press Arrow Keys to Move, SPACE to stop, Q to Quit\n")
+print("Current:\n")
 
 # create a hook manager object
 hm = pyHook.HookManager()
